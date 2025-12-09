@@ -1,0 +1,50 @@
+// CactUScript Example: Structs and Data Types
+// Demonstrates struct definitions and usage
+
+// Define a Point struct
+struct Point {
+    x: int,
+    y: int
+}
+
+// Define a Rectangle struct
+struct Rectangle {
+    origin: Point,
+    width: int,
+    height: int
+}
+
+// Create Point instances
+let p1 = Point(0, 0)
+let p2 = Point(10, 20)
+
+println("Points:")
+println("  p1 = (" + str(p1.x) + ", " + str(p1.y) + ")")
+println("  p2 = (" + str(p2.x) + ", " + str(p2.y) + ")")
+
+// Calculate distance function
+fn distance(a, b) {
+    let dx = b.x - a.x
+    let dy = b.y - a.y
+    return (dx ** 2 + dy ** 2) ** 0.5
+}
+
+let dist = distance(p1, p2)
+println("  Distance: " + str(dist))
+
+// Working with maps (similar to objects)
+let user = {
+    "name": "Alice",
+    "age": 30,
+    "balance": 1000.0
+}
+
+println("")
+println("User Profile:")
+println("  Name: " + user["name"])
+println("  Age: " + str(user["age"]))
+println("  Balance: " + str(user["balance"]))
+
+// Update balance
+user["balance"] = user["balance"] + 500.0
+println("  Updated Balance: " + str(user["balance"]))

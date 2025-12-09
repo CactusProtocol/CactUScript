@@ -1,0 +1,14 @@
+// CactUScript Example: Hello World
+// A simple introduction to CactUScript syntax
+
+// Print a greeting
+println("Hello from CactUScript!")
+println("Welcome to the Cactus Protocol")
+
+// Variables
+let name = "Developer"
+let version = 0.1
+
+println("")
+println("Language: CactUScript v" + str(version))
+println("Created for: Decentralized Applications")

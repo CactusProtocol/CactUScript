@@ -1,0 +1,96 @@
+// CactUScript Example: Smart Contract
+// Demonstrates contract syntax for Solana dApps
+
+// Event declaration for logging
+event Transfer(from: string, to: string, amount: int)
+event Mint(to: string, amount: int)
+event Burn(from: string, amount: int)
+
+// Token contract definition
+contract SimpleToken {
+    // State variables
+    let name = "CactusToken"
+    let symbol = "CACT"
+    let total_supply = 0
+    let balances = {}
+    
+    // Initialize function
+    fn initialize(initial_supply) {
+        total_supply = initial_supply
+        balances["owner"] = initial_supply
+        emit Mint("owner", initial_supply)
+        println("Token initialized with supply: " + str(initial_supply))
+    }
+    
+    // Mint new tokens
+    fn mint(to, amount) {
+        if amount <= 0 {
+            println("Error: Amount must be positive")
+            return false
+        }
+        
+        total_supply = total_supply + amount
+        
+        if balances.contains(to) {
+            balances[to] = balances[to] + amount
+        } else {
+            balances[to] = amount
+        }
+        
+        emit Mint(to, amount)
+        return true
+    }
+    
+    // Transfer tokens
+    fn transfer(from, to, amount) {
+        if amount <= 0 {
+            println("Error: Amount must be positive")
+            return false
+        }
+        
+        let from_balance = balances.get(from, 0)
+        if from_balance < amount {
+            println("Error: Insufficient balance")
+            return false
+        }
+        
+        balances[from] = from_balance - amount
+        
+        let to_balance = balances.get(to, 0)
+        balances[to] = to_balance + amount
+        
+        emit Transfer(from, to, amount)
+        return true
+    }
+    
+    // Get balance
+    fn balance_of(account) {
+        return balances.get(account, 0)
+    }
+}
+
+// Demo the contract
+println("=== CactUScript Smart Contract Demo ===")
+println("")
+
+// Create and initialize token
+let token = SimpleToken
+token.initialize(1000000)
+
+println("")
+println("Token Info:")
+println("  Name: " + token.name)
+println("  Symbol: " + token.symbol)
+println("  Total Supply: " + str(token.total_supply))
+
+// Simulate transfers
+println("")
+println("Simulating Transfers:")
+token.mint("alice", 500)
+token.transfer("owner", "bob", 1000)
+
+println("")
+println("Final Balances:")
+println("  Owner: " + str(token.balance_of("owner")))
+println("  Alice: " + str(token.balance_of("alice")))
+println("  Bob: " + str(token.balance_of("bob")))

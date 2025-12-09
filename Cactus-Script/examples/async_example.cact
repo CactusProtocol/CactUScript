@@ -1,0 +1,69 @@
+// CactUScript Example: Async/Await
+// Demonstrates asynchronous programming patterns
+
+println("=== Async Programming Demo ===")
+println("")
+
+// Simulated async function (in real Solana apps, this would fetch from blockchain)
+async fn fetch_account_balance(address) {
+    // Simulate network delay
+    println("  Fetching balance for: " + address)
+    
+    // Mock balance data
+    let balances = {
+        "wallet_a": 1000,
+        "wallet_b": 2500,
+        "wallet_c": 750
+    }
+    
+    return balances.get(address, 0)
+}
+
+// Async function to get multiple balances
+async fn get_total_balance(addresses) {
+    let total = 0
+    
+    for addr in addresses {
+        let balance = await fetch_account_balance(addr)
+        total = total + balance
+    }
+    
+    return total
+}
+
+// Main execution
+println("Fetching wallet balances...")
+println("")
+
+let wallets = ["wallet_a", "wallet_b", "wallet_c"]
+let total = await get_total_balance(wallets)
+
+println("")
+println("Total balance across all wallets: " + str(total))
+
+// Demonstrating async patterns for dApp development
+println("")
+println("=== Solana-like Account Patterns ===")
+
+// Define an account structure
+struct Account {
+    pubkey: string,
+    lamports: int,
+    owner: string,
+    data: string
+}
+
+// Create mock accounts
+let accounts = [
+    Account("ABC123...", 5000000000, "TokenProgram", "token_data"),
+    Account("DEF456...", 2500000000, "SystemProgram", ""),
+    Account("GHI789...", 1000000000, "TokenProgram", "nft_data")
+]
+
+println("Accounts:")
+for acc in accounts {
+    println("  Pubkey: " + acc.pubkey)
+    println("    Lamports: " + str(acc.lamports))
+    println("    Owner: " + acc.owner)
+    println("")
+}

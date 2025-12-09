@@ -1,0 +1,37 @@
+// CactUScript Example: Fibonacci Sequence
+// Demonstrates functions and recursion
+
+// Recursive Fibonacci function
+fn fib(n) {
+    if n <= 1 {
+        return n
+    }
+    return fib(n - 1) + fib(n - 2)
+}
+
+// Iterative Fibonacci function (more efficient)
+fn fib_iter(n) {
+    if n <= 1 {
+        return n
+    }
+    
+    let a = 0
+    let b = 1
+    
+    for i in range(2, n + 1) {
+        let temp = a + b
+        a = b
+        b = temp
+    }
+    
+    return b
+}
+
+// Print first 15 Fibonacci numbers
+println("Fibonacci Sequence (first 15 numbers):")
+println("========================================")
+
+for i in range(15) {
+    let result = fib_iter(i)
+    println("fib(" + str(i) + ") = " + str(result))
+}
